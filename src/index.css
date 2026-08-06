@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: #e2e8f0;
+  background: #020617;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.12), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.1), transparent 30%),
+    #020617;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+::selection {
+  color: #020617;
+  background: #38bdf8;
+}
+
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.glass-card {
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(15, 23, 42, 0.68);
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.45);
+  backdrop-filter: blur(18px);
+}
