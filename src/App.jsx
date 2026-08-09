@@ -194,9 +194,21 @@ const certifications = [
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy",
     date: "2026",
-    badge: "/certificates/intro-cybersecurity.png",
+    badge: "/certifications/intro-cybersecurity.png",
+    description:
+      "Foundational knowledge of cybersecurity concepts, online threats, privacy, and safe digital practices.",
     credentialUrl:
       "https://www.credly.com/badges/e4c4f82d-4646-4823-8dd9-908a613387d7/public_url",
+  },
+  {
+    title: "Network Support and Security",
+    issuer: "Cisco",
+    date: "August 9, 2026",
+    badge: "/certifications/network-support-and-security.png",
+    description:
+      "Demonstrates foundational knowledge and practical skills in network support, troubleshooting, security concepts, and protecting networked systems.",
+    credentialUrl:
+      "https://www.credly.com/badges/84635f67-9699-4480-8672-d5342cce74e8/public_url",
   },
 ];
 
@@ -240,6 +252,19 @@ function ToolVisual({ tool }) {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [currentCertificate, setCurrentCertificate] = useState(0);
+
+  const nextCertificate = () => {
+    setCurrentCertificate((current) => (current + 1) % certifications.length);
+  };
+
+  const previousCertificate = () => {
+    setCurrentCertificate(
+      (current) => (current - 1 + certifications.length) % certifications.length,
+    );
+  };
+
+  const activeCertificate = certifications[currentCertificate];
 
   return (
     <main className="min-h-screen overflow-hidden text-slate-100">
@@ -771,7 +796,7 @@ function App() {
         className="px-6 py-24 lg:px-10 lg:py-32"
       >
         <div className="mx-auto max-w-7xl">
-          <SectionLabel>Certification</SectionLabel>
+          <SectionLabel>Certifications</SectionLabel>
 
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <h2 className="max-w-3xl text-4xl font-bold text-white sm:text-5xl">
@@ -779,66 +804,113 @@ function App() {
             </h2>
 
             <p className="max-w-md leading-7 text-slate-400">
-              A credential earned through Cisco Networking Academy and verified
-              through Credly.
+              Swipe on mobile or use the arrows to explore my certifications.
             </p>
           </div>
 
-          <div className="mt-14">
-            {certifications.map((certificate) => (
-              <motion.article
-                key={certificate.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="glass-card overflow-hidden rounded-[2rem]"
-              >
-                <div className="grid lg:grid-cols-[1.25fr_0.75fr]">
-                  <div className="flex min-h-[560px] items-center justify-center bg-slate-950 p-10">
-                    <div className="flex h-80 w-80 items-center justify-center rounded-[2rem] border border-white/10 bg-white p-8 shadow-2xl shadow-sky-950/40 sm:h-96 sm:w-96">
-                      <img
-                        src={certificate.badge}
-                        alt={`${certificate.title} badge`}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-14">
-                    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-sky-300">
-                      {certificate.issuer}
-                    </p>
-
-                    <h3 className="mt-4 text-3xl font-bold leading-tight text-white">
-                      {certificate.title}
-                    </h3>
-
-                    <p className="mt-4 text-slate-400">
-                      Issued in {certificate.date}
-                    </p>
-
-                    <p className="mt-6 leading-7 text-slate-300">
-                      This certification demonstrates foundational knowledge of
-                      cybersecurity concepts, online threats, privacy, and safe
-                      digital practices.
-                    </p>
-
-                    <div className="mt-8">
-                      <a
-                        href={certificate.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl bg-sky-400 px-5 py-3 font-semibold text-slate-950 transition hover:-translate-y-1 hover:bg-sky-300"
-                      >
-                        Verify on Credly
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
+          <div className="relative mt-14">
+            <motion.div
+              key={currentCertificate}
+              initial={{ opacity: 0, x: 45 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.18}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -80) {
+                  nextCertificate();
+                } else if (info.offset.x > 80) {
+                  previousCertificate();
+                }
+              }}
+              className="glass-card cursor-grab overflow-hidden rounded-[2rem] active:cursor-grabbing"
+            >
+              <div className="grid lg:grid-cols-[1.25fr_0.75fr]">
+                <div className="flex min-h-[500px] items-center justify-center bg-slate-950 p-10">
+                  <div className="flex h-72 w-72 items-center justify-center rounded-[2rem] border border-white/10 bg-white p-7 shadow-2xl shadow-sky-950/40 sm:h-96 sm:w-96">
+                    <img
+                      src={activeCertificate.badge}
+                      alt={`${activeCertificate.title} badge`}
+                      className="h-full w-full object-contain"
+                      draggable="false"
+                    />
                   </div>
                 </div>
-              </motion.article>
-            ))}
+
+                <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-14">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-sky-300">
+                    {activeCertificate.issuer}
+                  </p>
+
+                  <h3 className="mt-4 text-3xl font-bold leading-tight text-white sm:text-4xl">
+                    {activeCertificate.title}
+                  </h3>
+
+                  <p className="mt-4 text-slate-400">
+                    Issued {activeCertificate.date}
+                  </p>
+
+                  <p className="mt-6 leading-7 text-slate-300">
+                    {activeCertificate.description}
+                  </p>
+
+                  <div className="mt-8">
+                    <a
+                      href={activeCertificate.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl bg-sky-400 px-5 py-3 font-semibold text-slate-950 transition hover:-translate-y-1 hover:bg-sky-300"
+                    >
+                      Verify on Credly
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {certifications.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={previousCertificate}
+                  className="absolute left-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-slate-900/90 text-xl text-white shadow-xl transition hover:bg-sky-400 hover:text-slate-950 sm:left-5"
+                  aria-label="Previous certification"
+                >
+                  ←
+                </button>
+
+                <button
+                  type="button"
+                  onClick={nextCertificate}
+                  className="absolute right-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-slate-900/90 text-xl text-white shadow-xl transition hover:bg-sky-400 hover:text-slate-950 sm:right-5"
+                  aria-label="Next certification"
+                >
+                  →
+                </button>
+              </>
+            )}
+
+            <div className="mt-6 flex justify-center gap-2">
+              {certifications.map((certificate, index) => (
+                <button
+                  key={certificate.title}
+                  type="button"
+                  onClick={() => setCurrentCertificate(index)}
+                  className={`h-2.5 rounded-full transition-all ${
+                    currentCertificate === index
+                      ? "w-8 bg-sky-400"
+                      : "w-2.5 bg-white/20 hover:bg-white/40"
+                  }`}
+                  aria-label={`Show ${certificate.title}`}
+                />
+              ))}
+            </div>
+
+            <p className="mt-3 text-center text-xs uppercase tracking-[0.25em] text-slate-500">
+              {currentCertificate + 1} / {certifications.length}
+            </p>
           </div>
         </div>
       </section>
