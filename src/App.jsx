@@ -227,7 +227,7 @@ const certifications = [
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy",
     date: "2026",
-    badge: "/certifications/intro-cybersecurity.png",
+    badge: "/certificates/intro-cybersecurity.png",
     description:
       "Foundational knowledge of cybersecurity concepts, online threats, privacy, and safe digital practices.",
     credentialUrl:
@@ -237,7 +237,7 @@ const certifications = [
     title: "Network Support and Security",
     issuer: "Cisco",
     date: "August 9, 2026",
-    badge: "/certifications/network-support-and-security.png",
+    badge: "/certificates/network-support-and-security.png",
     description:
       "Demonstrates foundational knowledge and practical skills in network support, troubleshooting, security concepts, and protecting networked systems.",
     credentialUrl:
