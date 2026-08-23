@@ -480,6 +480,27 @@ function App() {
                     stiffness: 250,
                     damping: 25,
                   }}
+                  drag={position === "center" ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.18}
+                  onDragEnd={(_, info) => {
+                    if (position !== "center") return;
+
+                    const swipeDistance = 55;
+                    const swipeVelocity = 450;
+
+                    if (
+                      info.offset.x < -swipeDistance ||
+                      info.velocity.x < -swipeVelocity
+                    ) {
+                      next();
+                    } else if (
+                      info.offset.x > swipeDistance ||
+                      info.velocity.x > swipeVelocity
+                    ) {
+                      prev();
+                    }
+                  }}
                   className={`credential-stack-card credential-${position}`}
                   onClick={() => {
                     if (position === "left") prev();
