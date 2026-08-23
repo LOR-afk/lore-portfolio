@@ -629,7 +629,7 @@ function App() {
                   <input
                     type="email"
                     name="email"
-                    placeholder="you@example.com"
+                    placeholder="you@gmail.com"
                     autoComplete="email"
                     required
                   />
