@@ -509,7 +509,6 @@ function App() {
 
               <div className="cyber-carousel-caption">
                 <span>Hands-on cybersecurity learning</span>
-                <span>{cyberPaused ? "Paused" : "Auto · 4.5s"}</span>
               </div>
             </div>
           </motion.div>
