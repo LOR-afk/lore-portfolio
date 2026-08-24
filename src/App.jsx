@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { supabase } from "./lib/supabase";
 import {
   ArrowUpRight, Camera, ChevronLeft, ChevronRight, Code2, Database,
   Download, ExternalLink, GraduationCap, Mail, Menu, Server,
@@ -142,11 +143,30 @@ function App() {
       : "light";
   });
   const [mailStatus, setMailStatus] = useState("");
+  const [ratingAverage, setRatingAverage] = useState(0);
+  const [ratingTotal, setRatingTotal] = useState(0);
+  const [ratingLoading, setRatingLoading] = useState(true);
+  const [ratingSubmitting, setRatingSubmitting] = useState(false);
+  const [ratingMessage, setRatingMessage] = useState("");
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [hasRated, setHasRated] = useState(() =>
+    localStorage.getItem("lore-portfolio-rated") === "true"
+  );
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const savedRating = Number(
+      localStorage.getItem("lore-portfolio-rating-value") || 0
+    );
+    if (savedRating >= 1 && savedRating <= 5) {
+      setSelectedRating(savedRating);
+    }
+  }, []);
 
 
   useEffect(() => {
@@ -160,6 +180,69 @@ function App() {
 
     return () => window.clearInterval(timer);
   }, [cyberPaused]);
+
+  const loadPortfolioRatings = async () => {
+    setRatingLoading(true);
+
+    const { data, error } = await supabase
+      .from("portfolio_ratings")
+      .select("rating");
+
+    if (error) {
+      console.error("Unable to load portfolio ratings:", error);
+      setRatingMessage("Ratings are temporarily unavailable.");
+      setRatingLoading(false);
+      return;
+    }
+
+    const ratings = data ?? [];
+    const total = ratings.length;
+    const sum = ratings.reduce(
+      (accumulator, row) => accumulator + Number(row.rating || 0),
+      0
+    );
+
+    setRatingTotal(total);
+    setRatingAverage(total > 0 ? sum / total : 0);
+    setRatingLoading(false);
+  };
+
+  useEffect(() => {
+    loadPortfolioRatings();
+  }, []);
+
+  const submitPortfolioRating = async (rating) => {
+    if (ratingSubmitting || hasRated) {
+      if (hasRated) {
+        setRatingMessage("You already rated this portfolio on this browser.");
+      }
+      return;
+    }
+
+    setRatingSubmitting(true);
+    setSelectedRating(rating);
+    setRatingMessage("");
+
+    const { error } = await supabase
+      .from("portfolio_ratings")
+      .insert({ rating });
+
+    if (error) {
+      console.error("Unable to submit portfolio rating:", error);
+      setSelectedRating(0);
+      setRatingMessage("I couldn't save your rating. Please try again.");
+      setRatingSubmitting(false);
+      return;
+    }
+
+    localStorage.setItem("lore-portfolio-rated", "true");
+    localStorage.setItem("lore-portfolio-rating-value", String(rating));
+
+    setHasRated(true);
+    setRatingMessage("Thanks for rating my portfolio!");
+    setRatingSubmitting(false);
+    await loadPortfolioRatings();
+  };
 
   const toggleTheme = () => {
     setTheme((currentTheme) =>
@@ -671,7 +754,71 @@ function App() {
           </motion.div>
         </section>
 
-        <footer><span>© 2026 Lore Lindell Tamayo</span><span>Built with React + Vite</span></footer>
+        <section className="portfolio-rating-section">
+          <motion.div {...reveal} className="portfolio-rating-card">
+            <div className="portfolio-rating-copy">
+              <p className="rating-kicker">Portfolio feedback</p>
+              <h2>Enjoyed the experience?</h2>
+              <p>
+                Leave a quick rating. Your feedback helps me improve the
+                experience and presentation of this portfolio.
+              </p>
+            </div>
+
+            <div className="portfolio-rating-panel">
+              <div
+                className="rating-stars"
+                onMouseLeave={() => setHoverRating(0)}
+                aria-label="Rate this portfolio from 1 to 5 stars"
+              >
+                {[1, 2, 3, 4, 5].map((star) => {
+                  const activeRating = hoverRating || selectedRating;
+                  const isFilled = star <= activeRating;
+
+                  return (
+                    <button
+                      key={star}
+                      type="button"
+                      className={isFilled ? "active" : ""}
+                      onMouseEnter={() => !hasRated && setHoverRating(star)}
+                      onFocus={() => !hasRated && setHoverRating(star)}
+                      onBlur={() => setHoverRating(0)}
+                      onClick={() => submitPortfolioRating(star)}
+                      disabled={ratingSubmitting || hasRated}
+                      aria-label={`${star} star${star > 1 ? "s" : ""}`}
+                    >
+                      ★
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="rating-summary">
+                {ratingLoading ? (
+                  <span>Loading ratings...</span>
+                ) : ratingTotal > 0 ? (
+                  <>
+                    <strong>{ratingAverage.toFixed(1)}</strong>
+                    <span>/ 5</span>
+                    <small>
+                      {ratingTotal} {ratingTotal === 1 ? "rating" : "ratings"}
+                    </small>
+                  </>
+                ) : (
+                  <small>Be the first to rate this portfolio.</small>
+                )}
+              </div>
+
+              {ratingMessage && (
+                <p className="rating-message" role="status">
+                  {ratingMessage}
+                </p>
+              )}
+            </div>
+          </motion.div>
+        </section>
+
+                <footer><span>© 2026 Lore Lindell Tamayo</span><span>Built with React + Vite</span></footer>
       </div>
     </main>
   );
