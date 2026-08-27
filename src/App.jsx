@@ -114,6 +114,15 @@ const certifications = [
     url: "/certificates/ai-cybersecurity-perspective.pdf",
     linkLabel: "View certificate",
   },
+  {
+    title: "Operating Systems Basics",
+    issuer: "Cisco Networking Academy",
+    date: "August 27, 2026",
+    badge: "/certificates/operating-systems-basics.png",
+    description: "Foundational knowledge of operating system concepts, file systems, processes, user accounts, security, and basic system administration.",
+    url: "https://www.credly.com/badges/7e0aa8cf-e08b-48ea-a72c-97aec19c15e9/public_url",
+    linkLabel: "View credential",
+  },
 ];
 
 const contact = {
