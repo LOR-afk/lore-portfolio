@@ -693,7 +693,7 @@ function App() {
               </p>
 
               <div className="contact-actions">
-                <a href="/documents/resume.pdf" target="_blank" rel="noreferrer">
+                <a href="/documents/Lore_Tamayo_Resume.pdf" target="_blank" rel="noreferrer">
                   <Download size={16} />Download résumé
                 </a>
                 <a href={contact.github} target="_blank" rel="noreferrer">
