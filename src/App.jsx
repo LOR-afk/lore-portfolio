@@ -356,9 +356,9 @@ function App() {
               <p className="hero-body">I build practical web applications, learn through hands-on security labs, and care about systems that are useful, reliable, and secure.</p>
               <div className="hero-links">
                 <a href={contact.github} target="_blank" rel="noreferrer">github <ArrowUpRight size={13}/></a>
-                <a href={contact.linkedin}>linkedin <ArrowUpRight size={13}/></a>
-                <a href={`mailto:${contact.email}`}>email <ArrowUpRight size={13}/></a>
-                <a href="/documents/resume.pdf" target="_blank" rel="noreferrer">résumé <ArrowUpRight size={13}/></a>
+                <a href={contact.linkedin} target="_blank" rel="noreferrer">linkedin <ArrowUpRight size={13}/></a>
+                <a href={`mailto:${contact.email}`} target="_blank" rel="noreferrer">email <ArrowUpRight size={13}/></a>
+                <a href="/documents/Lore_Tamayo_Resume.pdf" target="_blank" rel="noreferrer">résumé <ArrowUpRight size={13}/></a>
               </div>
             </motion.div>
           </div>
