@@ -2929,3 +2929,12 @@ footer {
     gap: 10px !important;
   }
 }
+
+button,
+a {
+  outline: none;
+}
+
+.project-showcase-pagination button {
+  caret-color: transparent;
+}
