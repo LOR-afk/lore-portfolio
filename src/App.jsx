@@ -26,6 +26,15 @@ const projectFeatures = [
   "Security-focused authentication", "Responsive user interface",
 ];
 
+const projectScreenshots = [
+  {
+    src: "/projects/wr-plumbing/image.png",
+    title: "Admin Dashboard",
+    description:
+      "Centralized monitoring dashboard for client requests, quotations, job orders, support tickets, revenue, and inspector availability.",
+  },
+];
+
 const cybersecurityTools = [
   {
     name: "Kali Linux",
@@ -123,12 +132,21 @@ const certifications = [
     url: "https://www.credly.com/badges/7e0aa8cf-e08b-48ea-a72c-97aec19c15e9/public_url",
     linkLabel: "View credential",
   },
+  {
+    title: "Prompt Like an Engineer",
+    issuer: "Cisco Networking Academy",
+    date: "2026",
+    badge: "/certificates/prompt-like-an-engineer.png",
+    description: "Demonstrates foundational skills in structuring effective AI prompts, refining instructions, and applying systematic prompting techniques to produce more accurate and useful AI-generated results.",
+    url: "https://www.credly.com/badges/b07db848-e0b5-4027-a50d-be4b8cf4ad62/public_url",
+    linkLabel: "Verify credential",
+  },
 ];
 
 const contact = {
   email: "tamayo.lorelindell1@gmail.com",
   github: "https://github.com/LOR-afk",
-  linkedin: "#",
+  linkedin: "https://www.linkedin.com/in/lore-lindell-becoy-tamayo-931112340/",
 };
 
 const reveal = {
@@ -142,6 +160,8 @@ function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState("home");
   const [cert, setCert] = useState(0);
+  const [projectSlide, setProjectSlide] = useState(0);
+  const [projectPaused, setProjectPaused] = useState(false);
   const [cyberTool, setCyberTool] = useState(0);
   const [cyberPaused, setCyberPaused] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -177,6 +197,16 @@ function App() {
     }
   }, []);
 
+
+  useEffect(() => {
+    if (projectPaused) return undefined;
+    const timer = window.setInterval(() => {
+      setProjectSlide((currentSlide) =>
+        (currentSlide + 1) % projectScreenshots.length
+      );
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [projectPaused]);
 
   useEffect(() => {
     if (cyberPaused) return undefined;
@@ -297,6 +327,12 @@ function App() {
   const current = certifications[cert];
   const next = () => setCert((cert + 1) % certifications.length);
   const prev = () => setCert((cert - 1 + certifications.length) % certifications.length);
+  const nextProjectSlide = () =>
+    setProjectSlide((projectSlide + 1) % projectScreenshots.length);
+  const prevProjectSlide = () =>
+    setProjectSlide(
+      (projectSlide - 1 + projectScreenshots.length) % projectScreenshots.length
+    );
 
   return (
     <main className="portfolio-shell">
@@ -364,7 +400,7 @@ function App() {
           </div>
 
           <div className="stats-row">
-            {[['4th','YEAR BSIT'],['4','SKILL AREAS'],['4','CREDENTIALS'],['1','FEATURED SYSTEM']].map(([a,b]) => <div className="stat" key={b}><strong>{a}</strong><span>{b}</span></div>)}
+            {[['4th','YEAR BSIT'],['4','SKILL AREAS'],['5','CREDENTIALS'],['1','FEATURED SYSTEM']].map(([a,b]) => <div className="stat" key={b}><strong>{a}</strong><span>{b}</span></div>)}
           </div>
           <div className="dot-field dot-field-bottom" />
         </section>
@@ -399,18 +435,86 @@ function App() {
           </div>
         </section>
 
-        <section id="project" className="editorial-section">
-          <motion.div {...reveal} className="section-heading"><span>03</span><h2>Featured Project</h2></motion.div>
-          <motion.article {...reveal} className="project-card">
-            <div className="project-image-wrap"><img src="/projects/wr-plumbing/image.png" alt="WR Plumbing admin dashboard" loading="lazy" /></div>
-            <div className="project-copy">
-              <div className="project-meta">Laravel · PHP · MySQL</div>
-              <h3>WR Plumbing and Construction Services Management System</h3>
-              <p>A web-based billing and scheduling management system built to support operational workflows for WR Plumbing and Construction Services.</p>
-              <div className="feature-grid">{projectFeatures.map((f) => <span key={f}>{f}</span>)}</div>
-              <a href="https://github.com/LOR-afk/wrplumb-laravel" target="_blank" rel="noreferrer" className="text-link">Source code <ExternalLink size={14}/></a>
+        <section id="project" className="editorial-section project-showcase-section">
+          <motion.div {...reveal} className="section-heading">
+            <span>03</span>
+            <h2>Featured Project</h2>
+          </motion.div>
+
+          <motion.div {...reveal} className="project-showcase">
+            <div
+              className="project-showcase-visual"
+              onMouseEnter={() => setProjectPaused(true)}
+              onMouseLeave={() => setProjectPaused(false)}
+            >
+              <motion.div
+                key={projectScreenshots[projectSlide].src}
+                className="project-showcase-screen"
+                initial={{ opacity: 0, y: 10, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.35 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -55 || info.velocity.x < -450) {
+                    nextProjectSlide();
+                  } else if (info.offset.x > 55 || info.velocity.x > 450) {
+                    prevProjectSlide();
+                  }
+                }}
+              >
+                <img
+                  src={projectScreenshots[projectSlide].src}
+                  alt={`WR Plumbing ${projectScreenshots[projectSlide].title}`}
+                  loading="lazy"
+                />
+              </motion.div>
             </div>
-          </motion.article>
+
+            <div className="project-showcase-copy">
+              <span className="project-showcase-meta">
+                Laravel · PHP · MySQL
+              </span>
+
+              <motion.div
+                key={`project-copy-${projectSlide}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.28 }}
+              >
+                <h3>{projectScreenshots[projectSlide].title}</h3>
+
+                <p>{projectScreenshots[projectSlide].description}</p>
+              </motion.div>
+
+              <div className="project-showcase-footer">
+                <a
+                  href="https://github.com/LOR-afk/wrplumb-laravel"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-showcase-link"
+                >
+                  View repository <ExternalLink size={13} />
+                </a>
+
+                <div
+                  className="project-showcase-pagination"
+                  aria-label="Project screenshots"
+                >
+                  {projectScreenshots.map((screenshot, index) => (
+                    <button
+                      type="button"
+                      key={screenshot.src}
+                      className={index === projectSlide ? "active" : ""}
+                      onClick={() => setProjectSlide(index)}
+                      aria-label={`Show ${screenshot.title}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </section>
 
         <section id="cybersecurity" className="editorial-section cyber-section">
