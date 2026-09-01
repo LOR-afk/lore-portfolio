@@ -2938,3 +2938,41 @@ a {
 .project-showcase-pagination button {
   caret-color: transparent;
 }
+
+/* Prevent Featured Project carousel from shifting the section below */
+.project-showcase-copy {
+  min-height: 240px;
+}
+
+.project-showcase-screen {
+  min-height: 320px;
+}
+
+@media (max-width: 720px) {
+  .project-showcase-visual {
+    min-height: 235px;
+  }
+
+  .project-showcase-screen {
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-showcase-screen img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+  }
+
+  .project-showcase-copy {
+    min-height: 275px;
+  }
+}
+
+@media (max-width: 720px) {
+  .project-dynamic-copy {
+    min-height: 145px;
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { supabase } from "./lib/supabase";
 import {
   ArrowUpRight, Camera, ChevronLeft, ChevronRight, Code2, Database,
@@ -20,18 +20,42 @@ const skills = [
   ["Security", ShieldCheck, "Secure coding, networking, and hands-on defensive learning.", ["PicoCTF", "Web Security", "Networking", "Secure Coding", "Git"]],
 ];
 
-const projectFeatures = [
-  "Appointment and service scheduling", "Billing and payment management",
-  "Role-based user access", "Client and staff portals",
-  "Security-focused authentication", "Responsive user interface",
-];
-
 const projectScreenshots = [
   {
     src: "/projects/wr-plumbing/image.png",
-    title: "Admin Dashboard",
+    title: "Billing and Scheduling System",
+    stack: "Laravel · PHP · MySQL",
+    repo: "https://github.com/LOR-afk/wrplumb-laravel",
+    alt: "WR Plumbing Admin Dashboard",
     description:
       "Centralized monitoring dashboard for client requests, quotations, job orders, support tickets, revenue, and inspector availability.",
+  },
+  {
+    src: "/projects/random/asa-ka-go.png",
+    title: "Asa Ka Go",
+    stack: "React · Vite · Leaflet · OpenStreetMap",
+    repo: "https://github.com/LOR-afk/asa-ka-go",
+    alt: "Asa Ka Go route finder",
+    description:
+      "A location-based route finder that helps users search destinations, use their current location, and calculate the shortest route with distance and estimated travel time using OpenStreetMap and Leaflet.",
+  },
+  {
+    src: "/projects/random/cyberwatch-ph.png",
+    title: "CyberWatch PH",
+    stack: "React · Vite · JavaScript",
+    repo: "https://github.com/LOR-afk/cyberwatch-ph",
+    alt: "CyberWatch PH phishing link analyzer",
+    description:
+      "A client-side phishing link analyzer that helps users inspect suspicious URLs for common phishing and scam indicators without directly opening the website.",
+  },
+  {
+    src: "/projects/random/kape-ka.png",
+    title: "Kape Ka",
+    stack: "React · Vite · Leaflet · OpenStreetMap",
+    repo: "https://github.com/LOR-afk/kape-ka",
+    alt: "Kape Ka cafe finder map",
+    description:
+      "A location-based cafe finder for Cagayan de Oro that helps users discover nearby coffee shops, search by area, use their current location, and filter cafes by amenities such as Wi-Fi, outlets, air-conditioning, quiet spaces, and late operating hours.",
   },
 ];
 
@@ -161,6 +185,7 @@ function App() {
   const [active, setActive] = useState("home");
   const [cert, setCert] = useState(0);
   const [projectSlide, setProjectSlide] = useState(0);
+  const [projectDirection, setProjectDirection] = useState(1);
   const [projectPaused, setProjectPaused] = useState(false);
   const [cyberTool, setCyberTool] = useState(0);
   const [cyberPaused, setCyberPaused] = useState(false);
@@ -197,14 +222,16 @@ function App() {
     }
   }, []);
 
-
   useEffect(() => {
     if (projectPaused) return undefined;
+
     const timer = window.setInterval(() => {
+      setProjectDirection(1);
       setProjectSlide((currentSlide) =>
         (currentSlide + 1) % projectScreenshots.length
       );
-    }, 5000);
+    }, 8000);
+
     return () => window.clearInterval(timer);
   }, [projectPaused]);
 
@@ -324,18 +351,73 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  const current = certifications[cert];
   const next = () => setCert((cert + 1) % certifications.length);
   const prev = () => setCert((cert - 1 + certifications.length) % certifications.length);
-  const nextProjectSlide = () =>
-    setProjectSlide((projectSlide + 1) % projectScreenshots.length);
-  const prevProjectSlide = () =>
+  const nextProjectSlide = () => {
+    setProjectDirection(1);
     setProjectSlide(
-      (projectSlide - 1 + projectScreenshots.length) % projectScreenshots.length
+      (currentSlide) => (currentSlide + 1) % projectScreenshots.length
     );
+  };
+
+  const prevProjectSlide = () => {
+    setProjectDirection(-1);
+    setProjectSlide(
+      (currentSlide) =>
+        (currentSlide - 1 + projectScreenshots.length) % projectScreenshots.length
+    );
+  };
 
   return (
     <main className="portfolio-shell">
+      <style>{`
+        .project-showcase-copy {
+          min-height: 240px;
+        }
+
+        .project-showcase-screen {
+          min-height: 320px;
+        }
+
+        @media (max-width: 720px) {
+          .cyber-dynamic-copy {
+            min-height: 245px;
+          }
+
+          .cyber-carousel-copy {
+            min-height: 500px;
+          }
+
+          .cyber-carousel {
+            align-items: stretch;
+          }
+
+          .project-showcase-visual {
+            min-height: 235px;
+          }
+
+          .project-showcase-screen {
+            min-height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .project-showcase-screen img {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+          }
+
+          .project-showcase-copy {
+            min-height: 275px;
+          }
+
+          .project-dynamic-copy {
+            min-height: 145px;
+          }
+        }
+      `}</style>
       <button
         type="button"
         className="theme-icon-toggle"
@@ -345,6 +427,7 @@ function App() {
       >
         {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
       </button>
+
       <aside className="sidebar">
         <div>
           <a href="#home" className="brand">Lore Tamayo</a>
@@ -357,6 +440,7 @@ function App() {
             ))}
           </nav>
         </div>
+
         <div className="sidebar-bottom">
           <div className="availability"><span />Open to internships and opportunities</div>
           <p>For work, collaborations, or internship opportunities:</p>
@@ -365,6 +449,7 @@ function App() {
       </aside>
 
       <button className="mobile-menu-button" onClick={() => setMobileOpen(true)} aria-label="Open menu"><Menu size={20} /></button>
+
       {mobileOpen && (
         <div className="mobile-overlay" onClick={() => setMobileOpen(false)}>
           <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="mobile-nav" onClick={(e) => e.stopPropagation()}>
@@ -377,6 +462,7 @@ function App() {
       <div className="content">
         <section id="home" className="hero-section">
           <div className="dot-field dot-field-top" />
+
           <div className="hero-grid">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }}>
               <div className="portrait-frame">
@@ -390,6 +476,7 @@ function App() {
               <h1>Lore Lindell Tamayo</h1>
               <p className="hero-lead">I&apos;m a fourth-year BSIT student focused on full-stack web development and cybersecurity.</p>
               <p className="hero-body">I build practical web applications, learn through hands-on security labs, and care about systems that are useful, reliable, and secure.</p>
+
               <div className="hero-links">
                 <a href={contact.github} target="_blank" rel="noreferrer">github <ArrowUpRight size={13}/></a>
                 <a href={contact.linkedin} target="_blank" rel="noreferrer">linkedin <ArrowUpRight size={13}/></a>
@@ -400,13 +487,25 @@ function App() {
           </div>
 
           <div className="stats-row">
-            {[['4th','YEAR BSIT'],['4','SKILL AREAS'],['5','CREDENTIALS'],['1','FEATURED SYSTEM']].map(([a,b]) => <div className="stat" key={b}><strong>{a}</strong><span>{b}</span></div>)}
+            {[
+              ['4th', 'YEAR BSIT'],
+              ['4', 'SKILL AREAS'],
+              ['6', 'CREDENTIALS'],
+              ['4', 'FEATURED PROJECTS'],
+            ].map(([a, b]) => (
+              <div className="stat" key={b}>
+                <strong>{a}</strong>
+                <span>{b}</span>
+              </div>
+            ))}
           </div>
+
           <div className="dot-field dot-field-bottom" />
         </section>
 
         <section id="about" className="editorial-section">
           <motion.div {...reveal} className="section-heading"><span>01</span><h2>About</h2></motion.div>
+
           <motion.div {...reveal} className="two-column-copy">
             <p className="large-copy">Building technology that is useful, secure, and accessible.</p>
             <div className="body-copy">
@@ -415,6 +514,7 @@ function App() {
               <p>Outside development, I enjoy photography and exploring new tools through personal projects and self-paced learning.</p>
             </div>
           </motion.div>
+
           <div className="micro-grid">
             <article><GraduationCap size={19}/><strong>PHINMA Cagayan de Oro College</strong><span>Bachelor of Science in Information Technology</span></article>
             <article><Camera size={19}/><strong>Beyond Technology</strong><span>Photography, exploration, and continuous learning</span></article>
@@ -423,6 +523,7 @@ function App() {
 
         <section id="skills" className="editorial-section">
           <motion.div {...reveal} className="section-heading"><span>02</span><h2>Technical Skills</h2></motion.div>
+
           <div className="skill-list">
             {skills.map(([title, Icon, description, tools], i) => (
               <motion.article {...reveal} transition={{ duration:.5, delay:i*.05 }} className="skill-row" key={title}>
@@ -438,7 +539,7 @@ function App() {
         <section id="project" className="editorial-section project-showcase-section">
           <motion.div {...reveal} className="section-heading">
             <span>03</span>
-            <h2>Featured Project</h2>
+            <h2>Featured Projects</h2>
           </motion.div>
 
           <motion.div {...reveal} className="project-showcase">
@@ -447,50 +548,70 @@ function App() {
               onMouseEnter={() => setProjectPaused(true)}
               onMouseLeave={() => setProjectPaused(false)}
             >
-              <motion.div
-                key={projectScreenshots[projectSlide].src}
-                className="project-showcase-screen"
-                initial={{ opacity: 0, y: 10, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.35 }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.15}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x < -55 || info.velocity.x < -450) {
-                    nextProjectSlide();
-                  } else if (info.offset.x > 55 || info.velocity.x > 450) {
-                    prevProjectSlide();
-                  }
-                }}
-              >
-                <img
-                  src={projectScreenshots[projectSlide].src}
-                  alt={`WR Plumbing ${projectScreenshots[projectSlide].title}`}
-                  loading="lazy"
-                />
-              </motion.div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={projectScreenshots[projectSlide].src}
+                  className="project-showcase-screen"
+                  initial={{
+                    opacity: 0,
+                    x: projectDirection > 0 ? 60 : -60,
+                    scale: 0.985,
+                  }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{
+                    opacity: 0,
+                    x: projectDirection > 0 ? -60 : 60,
+                    scale: 0.985,
+                  }}
+                  transition={{
+                    duration: 0.65,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.12}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -55 || info.velocity.x < -450) {
+                      nextProjectSlide();
+                    } else if (info.offset.x > 55 || info.velocity.x > 450) {
+                      prevProjectSlide();
+                    }
+                  }}
+                >
+                  <img
+                    src={projectScreenshots[projectSlide].src}
+                    alt={projectScreenshots[projectSlide].alt}
+                    loading="lazy"
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div className="project-showcase-copy">
               <span className="project-showcase-meta">
-                Laravel · PHP · MySQL
+                {projectScreenshots[projectSlide].stack}
               </span>
 
-              <motion.div
-                key={`project-copy-${projectSlide}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.28 }}
-              >
-                <h3>{projectScreenshots[projectSlide].title}</h3>
-
-                <p>{projectScreenshots[projectSlide].description}</p>
-              </motion.div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  className="project-dynamic-copy"
+                  key={`project-copy-${projectSlide}`}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <h3>{projectScreenshots[projectSlide].title}</h3>
+                  <p>{projectScreenshots[projectSlide].description}</p>
+                </motion.div>
+              </AnimatePresence>
 
               <div className="project-showcase-footer">
                 <a
-                  href="https://github.com/LOR-afk/wrplumb-laravel"
+                  href={projectScreenshots[projectSlide].repo}
                   target="_blank"
                   rel="noreferrer"
                   className="project-showcase-link"
@@ -507,7 +628,11 @@ function App() {
                       type="button"
                       key={screenshot.src}
                       className={index === projectSlide ? "active" : ""}
-                      onClick={() => setProjectSlide(index)}
+                      onClick={() => {
+                        if (index === projectSlide) return;
+                        setProjectDirection(index > projectSlide ? 1 : -1);
+                        setProjectSlide(index);
+                      }}
                       aria-label={`Show ${screenshot.title}`}
                     />
                   ))}
@@ -535,6 +660,7 @@ function App() {
               </span>
 
               <motion.div
+                className="cyber-dynamic-copy"
                 key={`copy-${cyberTool}`}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -930,7 +1056,10 @@ function App() {
           </motion.div>
         </section>
 
-                <footer><span>© 2026 Lore Lindell Tamayo</span><span>Built with React + Vite</span></footer>
+        <footer>
+          <span>© 2026 Lore Lindell Tamayo</span>
+          <span>Built with React + Vite</span>
+        </footer>
       </div>
     </main>
   );
