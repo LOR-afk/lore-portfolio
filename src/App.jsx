@@ -371,14 +371,6 @@ function App() {
   return (
     <main className="portfolio-shell">
       <style>{`
-        .project-showcase-copy {
-          min-height: 240px;
-        }
-
-        .project-showcase-screen {
-          min-height: 320px;
-        }
-
         @media (max-width: 720px) {
           .cyber-dynamic-copy {
             min-height: 245px;
@@ -390,31 +382,6 @@ function App() {
 
           .cyber-carousel {
             align-items: stretch;
-          }
-
-          .project-showcase-visual {
-            min-height: 235px;
-          }
-
-          .project-showcase-screen {
-            min-height: 190px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .project-showcase-screen img {
-            width: 100%;
-            height: 190px;
-            object-fit: contain;
-          }
-
-          .project-showcase-copy {
-            min-height: 275px;
-          }
-
-          .project-dynamic-copy {
-            min-height: 145px;
           }
         }
       `}</style>
@@ -548,43 +515,43 @@ function App() {
               onMouseEnter={() => setProjectPaused(true)}
               onMouseLeave={() => setProjectPaused(false)}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={projectScreenshots[projectSlide].src}
-                  className="project-showcase-screen"
-                  initial={{
-                    opacity: 0,
-                    x: projectDirection > 0 ? 60 : -60,
-                    scale: 0.985,
-                  }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{
-                    opacity: 0,
-                    x: projectDirection > 0 ? -60 : 60,
-                    scale: 0.985,
-                  }}
-                  transition={{
-                    duration: 0.65,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.12}
-                  onDragEnd={(_, info) => {
-                    if (info.offset.x < -55 || info.velocity.x < -450) {
-                      nextProjectSlide();
-                    } else if (info.offset.x > 55 || info.velocity.x > 450) {
-                      prevProjectSlide();
-                    }
-                  }}
-                >
-                  <img
-                    src={projectScreenshots[projectSlide].src}
-                    alt={projectScreenshots[projectSlide].alt}
-                    loading="lazy"
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <div className="project-image-viewport">
+                <AnimatePresence initial={false}>
+                  <motion.div
+                    key={projectScreenshots[projectSlide].src}
+                    className="project-showcase-screen"
+                    initial={{
+                      opacity: 0,
+                      x: projectDirection > 0 ? 45 : -45,
+                    }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{
+                      opacity: 0,
+                      x: projectDirection > 0 ? -45 : 45,
+                    }}
+                    transition={{
+                      duration: 0.55,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.1}
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x < -55 || info.velocity.x < -450) {
+                        nextProjectSlide();
+                      } else if (info.offset.x > 55 || info.velocity.x > 450) {
+                        prevProjectSlide();
+                      }
+                    }}
+                  >
+                    <img
+                      src={projectScreenshots[projectSlide].src}
+                      alt={projectScreenshots[projectSlide].alt}
+                      loading="lazy"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
 
             <div className="project-showcase-copy">
@@ -592,22 +559,24 @@ function App() {
                 {projectScreenshots[projectSlide].stack}
               </span>
 
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  className="project-dynamic-copy"
-                  key={`project-copy-${projectSlide}`}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <h3>{projectScreenshots[projectSlide].title}</h3>
-                  <p>{projectScreenshots[projectSlide].description}</p>
-                </motion.div>
-              </AnimatePresence>
+              <div className="project-copy-viewport">
+                <AnimatePresence initial={false}>
+                  <motion.div
+                    className="project-dynamic-copy"
+                    key={`project-copy-${projectSlide}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{
+                      duration: 0.42,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <h3>{projectScreenshots[projectSlide].title}</h3>
+                    <p>{projectScreenshots[projectSlide].description}</p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
               <div className="project-showcase-footer">
                 <a
