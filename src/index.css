@@ -3127,3 +3127,90 @@ footer {
     height: 178px !important;
   }
 }
+
+
+/* =========================================================
+   CYBERSECURITY CAROUSEL — ZERO LAYOUT SHIFT
+   Keeps Credentials fixed while the active security tool changes.
+   ========================================================= */
+.cyber-copy-viewport {
+  position: relative;
+  width: 100%;
+  height: 245px;
+  overflow: hidden;
+}
+
+.cyber-dynamic-copy {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+
+.cyber-image-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.cyber-image-viewport .cyber-image-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-image-viewport .cyber-image-frame img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 960px) {
+  .cyber-copy-viewport {
+    height: 225px;
+  }
+
+  .cyber-image-viewport {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 720px) {
+  .cyber-carousel {
+    min-height: 0 !important;
+  }
+
+  .cyber-carousel-copy {
+    min-height: 0 !important;
+  }
+
+  .cyber-copy-viewport {
+    height: 235px;
+  }
+
+  .cyber-dynamic-copy {
+    min-height: 0 !important;
+  }
+
+  .cyber-image-viewport {
+    aspect-ratio: 16 / 9;
+  }
+
+  .cyber-image-viewport .cyber-image-frame {
+    min-height: 0 !important;
+  }
+
+  .cyber-image-viewport .cyber-image-frame img {
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .cyber-copy-viewport {
+    height: 250px;
+  }
+}

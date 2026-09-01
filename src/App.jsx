@@ -372,14 +372,6 @@ function App() {
     <main className="portfolio-shell">
       <style>{`
         @media (max-width: 720px) {
-          .cyber-dynamic-copy {
-            min-height: 245px;
-          }
-
-          .cyber-carousel-copy {
-            min-height: 500px;
-          }
-
           .cyber-carousel {
             align-items: stretch;
           }
@@ -628,14 +620,18 @@ function App() {
                 Tools & Environments
               </span>
 
-              <motion.div
-                className="cyber-dynamic-copy"
-                key={`copy-${cyberTool}`}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div className="cyber-carousel-meta">
+              <div className="cyber-copy-viewport">
+                <motion.div
+                  className="cyber-dynamic-copy"
+                  key={`copy-${cyberTool}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <div className="cyber-carousel-meta">
                   <span>
                     {String(cyberTool + 1).padStart(2, "0")} /{" "}
                     {String(cybersecurityTools.length).padStart(2, "0")}
@@ -651,10 +647,11 @@ function App() {
                   {cybersecurityTools[cyberTool].use}
                 </p>
 
-                <p className="cyber-carousel-description">
-                  {cybersecurityTools[cyberTool].description}
-                </p>
-              </motion.div>
+                  <p className="cyber-carousel-description">
+                    {cybersecurityTools[cyberTool].description}
+                  </p>
+                </motion.div>
+              </div>
 
               <div className="cyber-carousel-progress" aria-label="Cybersecurity tools">
                 {cybersecurityTools.map((tool, index) => (
@@ -688,14 +685,18 @@ function App() {
             <div className="cyber-carousel-visual">
               <div className="cyber-dot-field" />
 
-              <motion.div
-                key={`image-${cyberTool}`}
-                initial={{ opacity: 0, scale: 0.985 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
-                className="cyber-image-frame"
-              >
-                <img
+              <div className="cyber-image-viewport">
+                <motion.div
+                  key={`image-${cyberTool}`}
+                  initial={{ opacity: 0, scale: 0.992 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.45,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="cyber-image-frame"
+                >
+                  <img
                   src={cybersecurityTools[cyberTool].image}
                   alt={`${cybersecurityTools[cyberTool].name} hands-on environment`}
                   onError={(event) => {
@@ -705,15 +706,16 @@ function App() {
                   }}
                 />
 
-                <div className="cyber-image-placeholder">
-                  <Terminal size={26} />
-                  <strong>{cybersecurityTools[cyberTool].name}</strong>
-                  <span>
-                    Add image to
-                    <code>{cybersecurityTools[cyberTool].image}</code>
-                  </span>
-                </div>
-              </motion.div>
+                  <div className="cyber-image-placeholder">
+                    <Terminal size={26} />
+                    <strong>{cybersecurityTools[cyberTool].name}</strong>
+                    <span>
+                      Add image to
+                      <code>{cybersecurityTools[cyberTool].image}</code>
+                    </span>
+                  </div>
+                </motion.div>
+              </div>
 
               <div className="cyber-carousel-caption">
                 <span>Hands-on cybersecurity learning</span>
