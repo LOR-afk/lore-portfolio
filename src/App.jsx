@@ -96,16 +96,34 @@ const projectScreenshots = [
     description:
       "A location-based cafe finder for Cagayan de Oro that helps users discover nearby coffee shops, search by area, use their current location, and filter cafes by amenities such as Wi-Fi, outlets, air-conditioning, quiet spaces, and late operating hours.",
   },
-  {
-    src: "/projects/hands-on/packet-tracer.png",
-    title: "PWDbyMe SecureNet Lab",
-    stack: "Cisco Packet Tracer · VLANs · ACLs · NAT/PAT",
-    repo: "/documents/packet-tracer-documentation.pdf",
-    linkLabel: "View documentation",
-    alt: "PWDbyMe SecureNet secure enterprise network topology",
+ {
+    src: "/projects/security/secretsentinel.png",
+    title: "SecretSentinel",
+    stack: "Python · FastAPI · React · MySQL · SQLAlchemy",
+    repo: "https://github.com/LOR-afk/secretsentinel",
+    alt: "SecretSentinel source code secret scanning dashboard",
     description:
-      "A secure enterprise network simulation featuring VLAN segmentation, inter-VLAN routing, ACL-based access control, IT-only SSH management, switch port security, NAT/PAT, ISP simulation, and a DMZ web server.",
+      "A source code security scanner that analyzes uploaded project archives for potential hardcoded credentials and exposed secrets. It provides categorized findings, file locations, and persistent scan history to help developers identify security risks before deployment.",
   },
+  {
+    src: "/projects/security/rateshield.png",
+    title: "RateShield",
+    stack: "Python · FastAPI · React · MySQL · REST API",
+    repo: "https://github.com/LOR-afk/rateshield",
+    alt: "RateShield API abuse detection dashboard",
+    description:
+      "An API security monitoring system that detects excessive requests, repeated failed login attempts, and suspicious client activity. It features configurable rate-limiting policies, HTTP 429 responses, security event logging, and heuristic risk scoring.",
+  },
+  {
+    src: "/projects/security/sentinel.png",
+    title: "Sentinel",
+    stack: "Python · FastAPI · React · MySQL · JWT · HMAC",
+    repo: "https://github.com/LOR-afk/sentinel",
+    alt: "Sentinel security operations dashboard",
+    description:
+      "A security event monitoring platform designed to collect authenticated application telemetry, detect suspicious authentication patterns, and manage security alerts. It includes signed event ingestion, administrator authentication, incident management, and a near-real-time dashboard.",
+  },
+
 ];
 
 const cybersecurityTools = [
