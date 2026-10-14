@@ -3214,3 +3214,40 @@ footer {
     height: 250px;
   }
 }
+
+
+/* Portrait featured project */
+.project-image-viewport.portrait-project {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  display: grid;
+  place-items: center;
+}
+
+.project-image-viewport.portrait-project .project-showcase-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-image-viewport.portrait-project .project-showcase-screen img {
+  width: auto !important;
+  height: 88% !important;
+  max-width: 42% !important;
+  max-height: 88% !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+}
+
+@media (max-width: 720px) {
+  .project-image-viewport.portrait-project {
+    aspect-ratio: 4 / 3;
+  }
+
+  .project-image-viewport.portrait-project .project-showcase-screen img {
+    width: auto !important;
+    height: 92% !important;
+    max-width: 68% !important;
+    max-height: 92% !important;
+  }
+}

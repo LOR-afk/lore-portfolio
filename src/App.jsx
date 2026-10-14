@@ -2,22 +2,61 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { supabase } from "./lib/supabase";
 import {
-  ArrowUpRight, Camera, ChevronLeft, ChevronRight, Code2, Database,
-  Download, ExternalLink, GraduationCap, Mail, Menu, Server,
-  ShieldCheck, Terminal, X, Moon, Sun, Send,
+  ArrowUpRight,
+  Camera,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  Database,
+  Download,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+  Menu,
+  Server,
+  ShieldCheck,
+  Terminal,
+  X,
+  Moon,
+  Sun,
+  Send,
 } from "lucide-react";
 
 const navigation = [
-  ["Home", "#home"], ["About", "#about"], ["Skills", "#skills"],
-  ["Project", "#project"], ["Cybersecurity", "#cybersecurity"],
-  ["Credentials", "#certifications"], ["Contact", "#contact"],
+  ["Home", "#home"],
+  ["About", "#about"],
+  ["Skills", "#skills"],
+  ["Project", "#project"],
+  ["Cybersecurity", "#cybersecurity"],
+  ["Credentials", "#certifications"],
+  ["Contact", "#contact"],
 ];
 
 const skills = [
-  ["Frontend", Code2, "Responsive interfaces and accessible user experiences.", ["HTML", "CSS", "JavaScript", "Bootstrap", "Responsive Design"]],
-  ["Backend", Server, "Server-side logic, APIs, authentication, and RBAC.", ["Laravel", "PHP", "REST APIs", "RBAC"]],
-  ["Database", Database, "Relational modeling, querying, and structured data management.", ["MySQL", "Database Design", "SQL", "Data Management"]],
-  ["Security", ShieldCheck, "Secure coding, networking, and hands-on defensive learning.", ["PicoCTF", "Web Security", "Networking", "Secure Coding", "Git"]],
+  [
+    "Frontend",
+    Code2,
+    "Responsive interfaces and accessible user experiences.",
+    ["HTML", "CSS", "JavaScript", "Bootstrap", "Responsive Design"],
+  ],
+  [
+    "Backend",
+    Server,
+    "Server-side logic, APIs, authentication, and RBAC.",
+    ["Laravel", "PHP", "REST APIs", "RBAC"],
+  ],
+  [
+    "Database",
+    Database,
+    "Relational modeling, querying, and structured data management.",
+    ["MySQL", "Database Design", "SQL", "Data Management"],
+  ],
+  [
+    "Security",
+    ShieldCheck,
+    "Secure coding, networking, and hands-on defensive learning.",
+    ["PicoCTF", "Web Security", "Networking", "Secure Coding", "Git"],
+  ],
 ];
 
 const projectScreenshots = [
@@ -56,6 +95,16 @@ const projectScreenshots = [
     alt: "Kape Ka cafe finder map",
     description:
       "A location-based cafe finder for Cagayan de Oro that helps users discover nearby coffee shops, search by area, use their current location, and filter cafes by amenities such as Wi-Fi, outlets, air-conditioning, quiet spaces, and late operating hours.",
+  },
+  {
+    src: "/projects/hands-on/packet-tracer.png",
+    title: "PWDbyMe SecureNet Lab",
+    stack: "Cisco Packet Tracer · VLANs · ACLs · NAT/PAT",
+    repo: "/documents/packet-tracer-documentation.pdf",
+    linkLabel: "View documentation",
+    alt: "PWDbyMe SecureNet secure enterprise network topology",
+    description:
+      "A secure enterprise network simulation featuring VLAN segmentation, inter-VLAN routing, ACL-based access control, IT-only SSH management, switch port security, NAT/PAT, ISP simulation, and a DMZ web server.",
   },
 ];
 
@@ -116,7 +165,8 @@ const certifications = [
     issuer: "Cisco Networking Academy",
     date: "2026",
     badge: "/certificates/intro-cybersecurity.png",
-    description: "Foundational knowledge of cybersecurity concepts, online threats, privacy, and safe digital practices.",
+    description:
+      "Foundational knowledge of cybersecurity concepts, online threats, privacy, and safe digital practices.",
     url: "https://www.credly.com/badges/e4c4f82d-4646-4823-8dd9-908a613387d7/public_url",
     linkLabel: "Verify credential",
   },
@@ -125,34 +175,18 @@ const certifications = [
     issuer: "Cisco",
     date: "August 9, 2026",
     badge: "/certificates/network-support-and-security.png",
-    description: "Network support, troubleshooting, security concepts, and protecting networked systems.",
+    description:
+      "Network support, troubleshooting, security concepts, and protecting networked systems.",
     url: "https://www.credly.com/badges/84635f67-9699-4480-8672-d5342cce74e8/public_url",
     linkLabel: "Verify credential",
-  },
-  {
-    title: "Cyber Hygiene Training",
-    issuer: "APAC Cybersecurity Fund · YGOAL",
-    date: "September 28, 2025",
-    badge: "/certificates/cyber-hygiene-training.png",
-    description: "Certificate of Completion for actively participating in and completing the Cyber Hygiene Training under the APAC Cybersecurity Fund.",
-    url: "/certificates/cyber-hygiene-training.pdf",
-    linkLabel: "View certificate",
-  },
-  {
-    title: "Artificial Intelligence in a Cybersecurity Perspective",
-    issuer: "Certificate of Attendance",
-    date: "July 3, 2026",
-    badge: "/certificates/ai-cybersecurity-perspective.png",
-    description: "Certificate confirming attendance in Artificial Intelligence in a Cybersecurity Perspective.",
-    url: "/certificates/ai-cybersecurity-perspective.pdf",
-    linkLabel: "View certificate",
   },
   {
     title: "Operating Systems Basics",
     issuer: "Cisco Networking Academy",
     date: "August 27, 2026",
     badge: "/certificates/operating-systems-basics.png",
-    description: "Foundational knowledge of operating system concepts, file systems, processes, user accounts, security, and basic system administration.",
+    description:
+      "Foundational knowledge of operating system concepts, file systems, processes, user accounts, security, and basic system administration.",
     url: "https://www.credly.com/badges/7e0aa8cf-e08b-48ea-a72c-97aec19c15e9/public_url",
     linkLabel: "View credential",
   },
@@ -161,10 +195,42 @@ const certifications = [
     issuer: "Cisco Networking Academy",
     date: "2026",
     badge: "/certificates/prompt-like-an-engineer.png",
-    description: "Demonstrates foundational skills in structuring effective AI prompts, refining instructions, and applying systematic prompting techniques to produce more accurate and useful AI-generated results.",
+    description:
+      "Demonstrates foundational skills in structuring effective AI prompts, refining instructions, and applying systematic prompting techniques to produce more accurate and useful AI-generated results.",
     url: "https://www.credly.com/badges/b07db848-e0b5-4027-a50d-be4b8cf4ad62/public_url",
     linkLabel: "Verify credential",
   },
+  {
+    title: "Understanding Threats and Attacks",
+    issuer: "Department of Information and Communications Technology (DICT)",
+    date: "August 31, 2026",
+    badge: "/certificates/understanding-threats-attacks.png",
+    description:
+      "Completed a four-hour self-paced cybersecurity training program on Understanding Threats and Attacks, conducted by the DICT ICT Literacy and Competency Development Bureau through DICT Nueva Ecija via Cisco NetAcad.",
+    url: "/certificates/understanding-threats-attacks.pdf",
+    linkLabel: "View certificate",
+  },
+  {
+    title: "Cyber Hygiene Training",
+    issuer: "APAC Cybersecurity Fund · YGOAL",
+    date: "September 28, 2025",
+    badge: "/certificates/cyber-hygiene-training.png",
+    description:
+      "Certificate of Completion for actively participating in and completing the Cyber Hygiene Training under the APAC Cybersecurity Fund.",
+    url: "/certificates/cyber-hygiene-training.pdf",
+    linkLabel: "View certificate",
+  },
+  {
+    title: "Artificial Intelligence in a Cybersecurity Perspective",
+    issuer: "Certificate of Attendance",
+    date: "July 3, 2026",
+    badge: "/certificates/ai-cybersecurity-perspective.png",
+    description:
+      "Certificate confirming attendance in Artificial Intelligence in a Cybersecurity Perspective.",
+    url: "/certificates/ai-cybersecurity-perspective.pdf",
+    linkLabel: "View certificate",
+  },
+  
 ];
 
 const contact = {
@@ -204,8 +270,8 @@ function App() {
   const [ratingMessage, setRatingMessage] = useState("");
   const [selectedRating, setSelectedRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [hasRated, setHasRated] = useState(() =>
-    localStorage.getItem("lore-portfolio-rated") === "true"
+  const [hasRated, setHasRated] = useState(
+    () => localStorage.getItem("lore-portfolio-rated") === "true",
   );
 
   useEffect(() => {
@@ -215,7 +281,7 @@ function App() {
 
   useEffect(() => {
     const savedRating = Number(
-      localStorage.getItem("lore-portfolio-rating-value") || 0
+      localStorage.getItem("lore-portfolio-rating-value") || 0,
     );
     if (savedRating >= 1 && savedRating <= 5) {
       setSelectedRating(savedRating);
@@ -227,8 +293,8 @@ function App() {
 
     const timer = window.setInterval(() => {
       setProjectDirection(1);
-      setProjectSlide((currentSlide) =>
-        (currentSlide + 1) % projectScreenshots.length
+      setProjectSlide(
+        (currentSlide) => (currentSlide + 1) % projectScreenshots.length,
       );
     }, 8000);
 
@@ -239,8 +305,8 @@ function App() {
     if (cyberPaused) return undefined;
 
     const timer = window.setInterval(() => {
-      setCyberTool((currentTool) =>
-        (currentTool + 1) % cybersecurityTools.length
+      setCyberTool(
+        (currentTool) => (currentTool + 1) % cybersecurityTools.length,
       );
     }, 4500);
 
@@ -265,7 +331,7 @@ function App() {
     const total = ratings.length;
     const sum = ratings.reduce(
       (accumulator, row) => accumulator + Number(row.rating || 0),
-      0
+      0,
     );
 
     setRatingTotal(total);
@@ -311,9 +377,7 @@ function App() {
   };
 
   const toggleTheme = () => {
-    setTheme((currentTheme) =>
-      currentTheme === "light" ? "dark" : "light"
-    );
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
   };
 
   const handleEmailSubmit = (event) => {
@@ -343,20 +407,29 @@ function App() {
 
   useEffect(() => {
     const ids = navigation.map(([, href]) => href.slice(1));
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (visible[0]) setActive(visible[0].target.id);
-    }, { rootMargin: "-25% 0px -60% 0px", threshold: [0.1, 0.25] });
-    ids.map((id) => document.getElementById(id)).filter(Boolean).forEach((el) => observer.observe(el));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-25% 0px -60% 0px", threshold: [0.1, 0.25] },
+    );
+    ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+      .forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   const next = () => setCert((cert + 1) % certifications.length);
-  const prev = () => setCert((cert - 1 + certifications.length) % certifications.length);
+  const prev = () =>
+    setCert((cert - 1 + certifications.length) % certifications.length);
   const nextProjectSlide = () => {
     setProjectDirection(1);
     setProjectSlide(
-      (currentSlide) => (currentSlide + 1) % projectScreenshots.length
+      (currentSlide) => (currentSlide + 1) % projectScreenshots.length,
     );
   };
 
@@ -364,7 +437,8 @@ function App() {
     setProjectDirection(-1);
     setProjectSlide(
       (currentSlide) =>
-        (currentSlide - 1 + projectScreenshots.length) % projectScreenshots.length
+        (currentSlide - 1 + projectScreenshots.length) %
+        projectScreenshots.length,
     );
   };
 
@@ -389,31 +463,64 @@ function App() {
 
       <aside className="sidebar">
         <div>
-          <a href="#home" className="brand">Lore Tamayo</a>
+          <a href="#home" className="brand">
+            Lore Tamayo
+          </a>
           <p className="brand-subtitle">BSIT · Full-Stack · Cybersecurity</p>
           <nav className="sidebar-nav">
             {navigation.map(([label, href]) => (
-              <a key={label} href={href} className={active === href.slice(1) ? "active" : ""}>
-                <span className="nav-dot" />{label}
+              <a
+                key={label}
+                href={href}
+                className={active === href.slice(1) ? "active" : ""}
+              >
+                <span className="nav-dot" />
+                {label}
               </a>
             ))}
           </nav>
         </div>
 
         <div className="sidebar-bottom">
-          <div className="availability"><span />Open to internships and opportunities</div>
+          <div className="availability">
+            <span />
+            Open to internships and opportunities
+          </div>
           <p>For work, collaborations, or internship opportunities:</p>
-          <a href={`mailto:${contact.email}`} className="sidebar-email"><Mail size={14} />{contact.email}</a>
+          <a href={`mailto:${contact.email}`} className="sidebar-email">
+            <Mail size={14} />
+            {contact.email}
+          </a>
         </div>
       </aside>
 
-      <button className="mobile-menu-button" onClick={() => setMobileOpen(true)} aria-label="Open menu"><Menu size={20} /></button>
+      <button
+        className="mobile-menu-button"
+        onClick={() => setMobileOpen(true)}
+        aria-label="Open menu"
+      >
+        <Menu size={20} />
+      </button>
 
       {mobileOpen && (
         <div className="mobile-overlay" onClick={() => setMobileOpen(false)}>
-          <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="mobile-nav" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-head"><strong>Lore Tamayo</strong><button onClick={() => setMobileOpen(false)}><X size={20} /></button></div>
-            {navigation.map(([label, href]) => <a key={label} href={href} onClick={() => setMobileOpen(false)}>{label}</a>)}
+          <motion.div
+            initial={{ x: -30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="mobile-nav"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mobile-head">
+              <strong>Lore Tamayo</strong>
+              <button onClick={() => setMobileOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            {navigation.map(([label, href]) => (
+              <a key={label} href={href} onClick={() => setMobileOpen(false)}>
+                {label}
+              </a>
+            ))}
           </motion.div>
         </div>
       )}
@@ -423,34 +530,77 @@ function App() {
           <div className="dot-field dot-field-top" />
 
           <div className="hero-grid">
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.65 }}
+            >
               <div className="portrait-frame">
-                <img src="/profile/lore-profile.png" alt="Lore Tamayo" className="portrait-image" onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextElementSibling.style.display = "grid"; }} />
-                <div className="portrait-placeholder"><b>LT</b><small>add public/profile/lore-profile.png</small></div>
+                <img
+                  src="/profile/lore-profile.png"
+                  alt="Lore Tamayo"
+                  className="portrait-image"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    e.currentTarget.nextElementSibling.style.display = "grid";
+                  }}
+                />
+                <div className="portrait-placeholder">
+                  <b>LT</b>
+                  <small>add public/profile/lore-profile.png</small>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .1 }} className="hero-copy">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.1 }}
+              className="hero-copy"
+            >
               <p className="eyebrow">Hello, I&apos;m</p>
               <h1>Lore Lindell Tamayo</h1>
-              <p className="hero-lead">I&apos;m a fourth-year BSIT student focused on full-stack web development and cybersecurity.</p>
-              <p className="hero-body">I build practical web applications, learn through hands-on security labs, and care about systems that are useful, reliable, and secure.</p>
+              <p className="hero-lead">
+                I&apos;m a fourth-year BSIT student focused on full-stack web
+                development and cybersecurity.
+              </p>
+              <p className="hero-body">
+                I build practical web applications, learn through hands-on
+                security labs, and care about systems that are useful, reliable,
+                and secure.
+              </p>
 
               <div className="hero-links">
-                <a href={contact.github} target="_blank" rel="noreferrer">github <ArrowUpRight size={13}/></a>
-                <a href={contact.linkedin} target="_blank" rel="noreferrer">linkedin <ArrowUpRight size={13}/></a>
-                <a href={`mailto:${contact.email}`} target="_blank" rel="noreferrer">email <ArrowUpRight size={13}/></a>
-                <a href="/documents/Lore_Tamayo_Resume.pdf" target="_blank" rel="noreferrer">résumé <ArrowUpRight size={13}/></a>
+                <a href={contact.github} target="_blank" rel="noreferrer">
+                  github <ArrowUpRight size={13} />
+                </a>
+                <a href={contact.linkedin} target="_blank" rel="noreferrer">
+                  linkedin <ArrowUpRight size={13} />
+                </a>
+                <a
+                  href={`mailto:${contact.email}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  email <ArrowUpRight size={13} />
+                </a>
+                <a
+                  href="/documents/Lore_Tamayo_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  résumé <ArrowUpRight size={13} />
+                </a>
               </div>
             </motion.div>
           </div>
 
           <div className="stats-row">
             {[
-              ['4th', 'YEAR BSIT'],
-              ['4', 'SKILL AREAS'],
-              ['6', 'CREDENTIALS'],
-              ['4', 'FEATURED PROJECTS'],
+              ["4th", "YEAR BSIT"],
+              ["4", "SKILL AREAS"],
+              [String(certifications.length), "CREDENTIALS"],
+              ["5", "FEATURED PROJECTS"],
             ].map(([a, b]) => (
               <div className="stat" key={b}>
                 <strong>{a}</strong>
@@ -463,39 +613,80 @@ function App() {
         </section>
 
         <section id="about" className="editorial-section">
-          <motion.div {...reveal} className="section-heading"><span>01</span><h2>About</h2></motion.div>
+          <motion.div {...reveal} className="section-heading">
+            <span>01</span>
+            <h2>About</h2>
+          </motion.div>
 
           <motion.div {...reveal} className="two-column-copy">
-            <p className="large-copy">Building technology that is useful, secure, and accessible.</p>
+            <p className="large-copy">
+              Building technology that is useful, secure, and accessible.
+            </p>
             <div className="body-copy">
-              <p>I&apos;m a Bachelor of Science in Information Technology student at PHINMA Cagayan de Oro College with a strong interest in full-stack development and cybersecurity.</p>
-              <p>My current toolkit includes Laravel, PHP, MySQL, HTML, CSS, JavaScript, Bootstrap, Git, and responsive web development.</p>
-              <p>Outside development, I enjoy photography and exploring new tools through personal projects and self-paced learning.</p>
+              <p>
+                I&apos;m a Bachelor of Science in Information Technology student
+                at PHINMA Cagayan de Oro College with a strong interest in
+                full-stack development and cybersecurity.
+              </p>
+              <p>
+                My current toolkit includes Laravel, PHP, MySQL, HTML, CSS,
+                JavaScript, Bootstrap, Git, and responsive web development.
+              </p>
+              <p>
+                Outside development, I enjoy photography and exploring new tools
+                through personal projects and self-paced learning.
+              </p>
             </div>
           </motion.div>
 
           <div className="micro-grid">
-            <article><GraduationCap size={19}/><strong>PHINMA Cagayan de Oro College</strong><span>Bachelor of Science in Information Technology</span></article>
-            <article><Camera size={19}/><strong>Beyond Technology</strong><span>Photography, exploration, and continuous learning</span></article>
+            <article>
+              <GraduationCap size={19} />
+              <strong>PHINMA Cagayan de Oro College</strong>
+              <span>Bachelor of Science in Information Technology</span>
+            </article>
+            <article>
+              <Camera size={19} />
+              <strong>Beyond Technology</strong>
+              <span>Photography, exploration, and continuous learning</span>
+            </article>
           </div>
         </section>
 
         <section id="skills" className="editorial-section">
-          <motion.div {...reveal} className="section-heading"><span>02</span><h2>Technical Skills</h2></motion.div>
+          <motion.div {...reveal} className="section-heading">
+            <span>02</span>
+            <h2>Technical Skills</h2>
+          </motion.div>
 
           <div className="skill-list">
             {skills.map(([title, Icon, description, tools], i) => (
-              <motion.article {...reveal} transition={{ duration:.5, delay:i*.05 }} className="skill-row" key={title}>
-                <div className="skill-index">0{i+1}</div>
-                <div className="skill-title"><Icon size={20}/><h3>{title}</h3></div>
+              <motion.article
+                {...reveal}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                className="skill-row"
+                key={title}
+              >
+                <div className="skill-index">0{i + 1}</div>
+                <div className="skill-title">
+                  <Icon size={20} />
+                  <h3>{title}</h3>
+                </div>
                 <p>{description}</p>
-                <div className="skill-tools">{tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
+                <div className="skill-tools">
+                  {tools.map((tool) => (
+                    <span key={tool}>{tool}</span>
+                  ))}
+                </div>
               </motion.article>
             ))}
           </div>
         </section>
 
-        <section id="project" className="editorial-section project-showcase-section">
+        <section
+          id="project"
+          className="editorial-section project-showcase-section"
+        >
           <motion.div {...reveal} className="section-heading">
             <span>03</span>
             <h2>Featured Projects</h2>
@@ -507,7 +698,14 @@ function App() {
               onMouseEnter={() => setProjectPaused(true)}
               onMouseLeave={() => setProjectPaused(false)}
             >
-              <div className="project-image-viewport">
+              <div
+                className={`project-image-viewport ${
+                  projectScreenshots[projectSlide].orientation === "portrait"
+                    ? "portrait-project"
+                    : ""
+                }`}
+              >
+                {" "}
                 <AnimatePresence initial={false}>
                   <motion.div
                     key={projectScreenshots[projectSlide].src}
@@ -577,7 +775,7 @@ function App() {
                   rel="noreferrer"
                   className="project-showcase-link"
                 >
-                  View repository <ExternalLink size={13} />
+                  {projectScreenshots[projectSlide].linkLabel ?? "View repository"} <ExternalLink size={13} />
                 </a>
 
                 <div
@@ -632,20 +830,20 @@ function App() {
                   }}
                 >
                   <div className="cyber-carousel-meta">
-                  <span>
-                    {String(cyberTool + 1).padStart(2, "0")} /{" "}
-                    {String(cybersecurityTools.length).padStart(2, "0")}
-                  </span>
-                  <span className="cyber-carousel-status">
-                    {cybersecurityTools[cyberTool].status}
-                  </span>
-                </div>
+                    <span>
+                      {String(cyberTool + 1).padStart(2, "0")} /{" "}
+                      {String(cybersecurityTools.length).padStart(2, "0")}
+                    </span>
+                    <span className="cyber-carousel-status">
+                      {cybersecurityTools[cyberTool].status}
+                    </span>
+                  </div>
 
-                <h3>{cybersecurityTools[cyberTool].name}</h3>
+                  <h3>{cybersecurityTools[cyberTool].name}</h3>
 
-                <p className="cyber-carousel-use">
-                  {cybersecurityTools[cyberTool].use}
-                </p>
+                  <p className="cyber-carousel-use">
+                    {cybersecurityTools[cyberTool].use}
+                  </p>
 
                   <p className="cyber-carousel-description">
                     {cybersecurityTools[cyberTool].description}
@@ -653,7 +851,10 @@ function App() {
                 </motion.div>
               </div>
 
-              <div className="cyber-carousel-progress" aria-label="Cybersecurity tools">
+              <div
+                className="cyber-carousel-progress"
+                aria-label="Cybersecurity tools"
+              >
                 {cybersecurityTools.map((tool, index) => (
                   <button
                     type="button"
@@ -697,14 +898,14 @@ function App() {
                   className="cyber-image-frame"
                 >
                   <img
-                  src={cybersecurityTools[cyberTool].image}
-                  alt={`${cybersecurityTools[cyberTool].name} hands-on environment`}
-                  onError={(event) => {
-                    event.currentTarget.style.display = "none";
-                    const fallback = event.currentTarget.nextElementSibling;
-                    if (fallback) fallback.style.display = "grid";
-                  }}
-                />
+                    src={cybersecurityTools[cyberTool].image}
+                    alt={`${cybersecurityTools[cyberTool].name} hands-on environment`}
+                    onError={(event) => {
+                      event.currentTarget.style.display = "none";
+                      const fallback = event.currentTarget.nextElementSibling;
+                      if (fallback) fallback.style.display = "grid";
+                    }}
+                  />
 
                   <div className="cyber-image-placeholder">
                     <Terminal size={26} />
@@ -724,8 +925,14 @@ function App() {
           </motion.div>
         </section>
 
-        <section id="certifications" className="editorial-section credential-showcase">
-          <motion.div {...reveal} className="section-heading credential-heading">
+        <section
+          id="certifications"
+          className="editorial-section credential-showcase"
+        >
+          <motion.div
+            {...reveal}
+            className="section-heading credential-heading"
+          >
             <span>05</span>
             <h2>Credentials</h2>
 
@@ -761,11 +968,7 @@ function App() {
                           ? 250
                           : 0,
                     rotate:
-                      position === "left"
-                        ? -8
-                        : position === "right"
-                          ? 8
-                          : 0,
+                      position === "left" ? -8 : position === "right" ? 8 : 0,
                   }}
                   transition={{
                     type: "spring",
@@ -801,7 +1004,7 @@ function App() {
                 >
                   <div className="credential-card-topline">
                     <span>
-                      {String(index + 1).padStart(2, "0")} — Cisco Credential
+                      {String(index + 1).padStart(2, "0")} — Credential
                     </span>
                     <span>{certificate.date}</span>
                   </div>
@@ -818,9 +1021,7 @@ function App() {
                     <div>
                       <h3>{certificate.title}</h3>
 
-                      <p className="credential-issuer">
-                        {certificate.issuer}
-                      </p>
+                      <p className="credential-issuer">{certificate.issuer}</p>
 
                       <p className="credential-description">
                         {certificate.description}
@@ -894,11 +1095,17 @@ function App() {
               </p>
 
               <div className="contact-actions">
-                <a href="/documents/Lore_Tamayo_Resume.pdf" target="_blank" rel="noreferrer">
-                  <Download size={16} />Download résumé
+                <a
+                  href="/documents/Lore_Tamayo_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Download size={16} />
+                  Download résumé
                 </a>
                 <a href={contact.github} target="_blank" rel="noreferrer">
-                  GitHub<ArrowUpRight size={14} />
+                  GitHub
+                  <ArrowUpRight size={14} />
                 </a>
               </div>
             </div>
